@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: currency
+server:
+  port: 8080
+
+
+cbr:
+  client:
+    url: "https://www.cbr-xml-daily.ru/daily_json.js"

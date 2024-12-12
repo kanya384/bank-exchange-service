@@ -1,34 +1,52 @@
+server:
+  port: 9000
+
+logging:
+  level:
+    org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping: DEBUG
+
+
 cloud:
   eureka-host: localhost
   processing-service-url: http://localhost:8090
   currency-service-url: http://localhost:8080
+  auth-service-url: http://localhost:8050
+  history-service-url: http://localhost:8060
 
-server:
-  port: 9000
+
 
 
 spring:
   application:
     name: api-gateway-service
+
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-    routes:
-      - id: currency-rate-service
-        uri: ${cloud.currency-service-url}
-        predicates:
-          - Path=/currency/**
-      - id: exchange-processing-service
-        uri: ${cloud.processing-service-url}
-        predicates:
-          - Path=/processing/**
+      #discovery:
+      #  locator:
+      #    enabled: true
+      #    lower-case-service-id: true
+      routes:
+        - id: currency-rate-service
+          uri: ${cloud.currency-service-url}
+          predicates:
+            - Path=/currency/**
+        - id: exchange-processing-service
+          uri: ${cloud.processing-service-url}
+          predicates:
+            - Path=/processing/**
+        - id: auth-service
+          uri: ${cloud.auth-service-url}
+          predicates:
+            - Path=/oauth/**, /user/**
+        - id: account-history-service
+          uri: ${cloud.history-service-url}
+          predicates:
+            - Path=/history/**
 
 
 eureka:
   client:
     enabled: false
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://${cloud.eureka-host}:8761/eureka/

@@ -11,11 +11,17 @@
         <module name="eurika-service" />
         <module name="gateway" />
         <module name="currency-rate" />
+        <module name="auth-server" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="authorization-server" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="auth-server" options="-parameters" />
+      <module name="authorization-server" options="-parameters" />
       <module name="currency-rate" options="-parameters" />
       <module name="eurika-service" options="-parameters" />
       <module name="gateway" options="-parameters" />
